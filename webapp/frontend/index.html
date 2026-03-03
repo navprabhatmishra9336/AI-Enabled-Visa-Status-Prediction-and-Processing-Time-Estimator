@@ -57,6 +57,46 @@
         </div>
     </header>
 
+    <!-- Geopolitical Travel Advisory Banner -->
+    <div class="travel-advisory" id="travel-advisory">
+        <div class="container travel-advisory__inner">
+            <div class="travel-advisory__icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <div class="travel-advisory__content">
+                <div class="travel-advisory__title">⚠️ Geopolitical Travel Advisory — March 2026</div>
+                <div class="travel-advisory__text">
+                    Due to ongoing <strong>India–Pakistan tensions</strong>, visa processing for Pakistani nationals and
+                    neighboring conflict-zone countries may experience <strong>significant delays (+10–30
+                        days)</strong>.
+                    Airspace restrictions are in effect — flights between India, Pakistan, and affected Gulf routes
+                    (including Dubai–India) are subject to disruptions and diversions.
+                    Our AI model factors in geopolitical risk for affected nationalities. <strong>Check official embassy
+                        advisories before applying.</strong>
+                </div>
+                <div class="travel-advisory__meta">
+                    <span class="travel-advisory__tag">🔴 High Alert: Pakistan, Afghanistan</span>
+                    <span class="travel-advisory__tag travel-advisory__tag--warn">🟡 Elevated: Bangladesh, Iran,
+                        Iraq</span>
+                    <span class="travel-advisory__tag travel-advisory__tag--info">🟢 Normal: All other countries</span>
+                    <span class="travel-advisory__updated">Last updated: March 3, 2026</span>
+                </div>
+            </div>
+            <button class="travel-advisory__close"
+                onclick="document.getElementById('travel-advisory').style.display='none'" aria-label="Close advisory">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <section class="hero">
         <div class="container hero__inner">
             <div class="hero__content">
