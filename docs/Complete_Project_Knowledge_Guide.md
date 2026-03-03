@@ -719,10 +719,16 @@ Frontend renders:
 
 **Answer:**
 
-In our current model, geopolitical events like wars, sanctions, and diplomatic tensions are captured through **two indirect channels**:
+As of **March 2026**, two major geopolitical conflicts are actively impacting visa processing:
 
-1. **Nationality-based patterns**: Countries like Russia, China, and Bangladesh already have longer processing times in our training data (+2–5 extra days). In a real-world extension, if a war breaks out involving a specific country (e.g., Russia-Ukraine conflict), we would:
-   - Update the training data to reflect increased processing times for affected nationalities
+1. **India–Pakistan tensions**: Airspace restrictions between India and Pakistan, Dubai–India flights facing missile threat alerts and diversions, processing for Pakistani nationals significantly delayed
+2. **Israel–Iran–USA conflict**: Middle East airspace disrupted, Gulf route flights (UAE, Turkey, Iran) affected, increased security scrutiny for nationals of Iran, Israel, Iraq, and neighboring countries
+
+In our model, these events are captured through **two indirect channels**:
+
+1. **Nationality-based patterns**: Countries like Russia, China, Bangladesh, Pakistan, and Iran already have longer processing times in our training data (+2–5 extra days). During active conflicts:
+   - Processing times can increase by **+10–30 additional days**
+   - Rejection rates increase due to heightened security screening
    - The `country_avg_processing_time` feature would automatically capture this shift
    - The `risk_score` could be extended to include a "geopolitical risk" factor
 
@@ -732,9 +738,11 @@ In our current model, geopolitical events like wars, sanctions, and diplomatic t
 
 | Scenario | Impact on Model | How to Adapt |
 |----------|----------------|--------------|
-| War involving applicant's country | +5–15 days processing, higher rejection rate | Add `geopolitical_risk` feature (0/1), retrain with updated data |
+| India–Pakistan conflict | +10–30 days for Pakistani nationals, airspace closure | Add `conflict_zone` flag, retrain with updated data |
+| Israel–Iran–USA conflict | +5–20 days for Middle East nationals, Gulf flight disruptions | Add `geopolitical_risk` feature (0–3 scale) |
 | Sanctions on a country | Visa processing may be suspended entirely | Add "visa suspension" flag, model returns "Currently suspended" |
 | Diplomatic tensions | Stricter scrutiny → longer processing | Update `country_avg_processing_time` with recent data |
+| Airspace restrictions | Flight diversions add travel delays | Add `travel_disruption` advisory layer |
 | Global pandemic (COVID) | All visas delayed or suspended | Add `global_alert_level` feature (0–3 scale) |
 | Embassy closure | No processing possible | Handled at application layer level (before ML prediction) |
 
@@ -745,11 +753,12 @@ In our current model, geopolitical events like wars, sanctions, and diplomatic t
 Our website now includes a **Geopolitical Travel Advisory Banner** displayed on both the Home page and the Prediction page. This shows awareness of current events and their real-world impact:
 
 **What it displays:**
-- ⚠️ Current advisory header with date (e.g., "March 2026")
-- Specific context: India–Pakistan tensions, airspace restrictions, Dubai–India flight disruptions
+- ⚠️ Current advisory header with date ("March 2026")
+- **Two active conflicts:** India–Pakistan tensions AND Israel–Iran–USA conflict
+- Airspace restrictions across South Asia and the Middle East (missile threat alerts, flight diversions)
 - **Country-wise risk levels:**
-  - 🔴 **High Alert**: Pakistan, Afghanistan (processing may be suspended or delayed +10–30 days)
-  - 🟡 **Elevated**: Bangladesh, Iran, Iraq (additional scrutiny, +5–10 days)
+  - 🔴 **High Alert**: Pakistan, Afghanistan, Israel, Iran (processing may be suspended or delayed +10–30 days)
+  - 🟡 **Elevated**: Bangladesh, Iraq, UAE, Turkey, Ukraine, Russia (additional scrutiny, +5–10 days)
   - 🟢 **Normal**: All other countries (standard processing times apply)
 - Last updated timestamp
 - Dismissible via close button (UX-friendly)
