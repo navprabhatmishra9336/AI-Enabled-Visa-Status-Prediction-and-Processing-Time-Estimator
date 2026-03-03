@@ -1224,6 +1224,101 @@ async function findOptimalMonth(formData) {
 }
 
 // ============================================
+// GEOPOLITICAL COUNTRY RISK WARNING
+// ============================================
+const COUNTRY_RISK_DATA = {
+    // High Alert countries
+    'Pakistan': {
+        level: 'high',
+        icon: '🔴',
+        title: '⚠️ HIGH ALERT — India–Pakistan Conflict Zone',
+        text: 'Due to active India–Pakistan tensions, visa processing for Pakistani nationals is experiencing <strong>severe delays (+15–30 days)</strong>. Airspace is restricted — flights between Pakistan and India are suspended. Dubai–India routes are also affected by missile threat alerts. <strong>Processing may be temporarily suspended.</strong>'
+    },
+    'Afghanistan': {
+        level: 'high',
+        icon: '🔴',
+        title: '⚠️ HIGH ALERT — Conflict Zone',
+        text: 'Afghan nationals may face <strong>significant processing delays (+10–25 days)</strong> due to ongoing regional instability and India–Pakistan airspace restrictions. Applications require enhanced security screening. Recommend express processing.'
+    },
+    'Israel': {
+        level: 'high',
+        icon: '🔴',
+        title: '⚠️ HIGH ALERT — Israel–Iran–USA Conflict',
+        text: 'Due to the ongoing Israel–Iran–USA conflict, Israeli nationals may experience <strong>processing delays (+10–20 days)</strong>. Middle East airspace disruptions affect Gulf flight routes. Enhanced security screening is in effect.'
+    },
+    'Iran': {
+        level: 'high',
+        icon: '🔴',
+        title: '⚠️ HIGH ALERT — Iran Conflict Zone',
+        text: 'Iranian nationals are subject to <strong>extended processing times (+15–30 days)</strong> due to the Israel–Iran–USA conflict and international sanctions. Gulf airspace is disrupted. Applications undergo rigorous security verification.'
+    },
+    // Elevated countries
+    'Bangladesh': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Regional Tension Impact',
+        text: 'Bangladeshi applicants may see <strong>moderate delays (+5–10 days)</strong> due to proximity to the India–Pakistan conflict zone and increased border scrutiny. Document completeness is critical.'
+    },
+    'Iraq': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Middle East Instability',
+        text: 'Iraqi nationals may experience <strong>additional processing delays (+5–10 days)</strong> due to the ongoing Middle East conflict. Gulf flight routes are disrupted. Allow extra time.'
+    },
+    'UAE': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Gulf Route Disruptions',
+        text: 'UAE-based applicants should note that <strong>Dubai–India flights are experiencing disruptions</strong> due to missile threat alerts. Processing is active but <strong>may take 3–7 extra days</strong> due to airspace diversions.'
+    },
+    'Turkey': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Regional Proximity',
+        text: 'Turkish nationals may face <strong>moderate delays (+3–7 days)</strong> due to proximity to the Israel–Iran conflict zone. Flight routes through the region are affected.'
+    },
+    'Ukraine': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Ongoing Conflict',
+        text: 'Ukrainian applicants may experience <strong>processing delays (+5–10 days)</strong> due to the ongoing Russia–Ukraine situation. Enhanced documentation verification is in effect.'
+    },
+    'Russia': {
+        level: 'elevated',
+        icon: '🟡',
+        title: '🟡 ELEVATED — Diplomatic Tensions',
+        text: 'Russian nationals may see <strong>extended processing times (+5–10 days)</strong> due to diplomatic tensions and sanctions. Applications undergo additional verification.'
+    }
+};
+
+function initCountryRiskWarning() {
+    const nationalitySelect = document.getElementById('nationality');
+    if (!nationalitySelect) return;
+
+    nationalitySelect.addEventListener('change', function () {
+        const country = this.value;
+        const warningEl = document.getElementById('country-risk-warning');
+        if (!warningEl) return;
+
+        const risk = COUNTRY_RISK_DATA[country];
+
+        if (risk) {
+            document.getElementById('crw-icon').textContent = risk.icon;
+            document.getElementById('crw-title').textContent = risk.title;
+            document.getElementById('crw-text').innerHTML = risk.text;
+            warningEl.className = `country-risk-warning country-risk-warning--${risk.level}`;
+            warningEl.style.display = 'flex';
+            // Animate entry
+            warningEl.style.animation = 'none';
+            warningEl.offsetHeight; // trigger reflow
+            warningEl.style.animation = 'warningSlideIn 0.4s ease-out';
+        } else {
+            warningEl.style.display = 'none';
+        }
+    });
+}
+
+// ============================================
 // INITIALIZE
 // ============================================
 document.addEventListener('DOMContentLoaded', function () {
@@ -1235,4 +1330,5 @@ document.addEventListener('DOMContentLoaded', function () {
     renderHistory(); // Load prediction history
     initCustomValidation(); // Custom validation UI
     initCustomDropdowns(); // Custom styled dropdowns
+    initCountryRiskWarning(); // Geopolitical country risk warnings
 });
