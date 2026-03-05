@@ -65,4 +65,4 @@ python src/data_preprocessing.py
 | visa_status | **TARGET**: Approved, Rejected, or Pending |
 
 ### Author
-Rahul Makwana - Infosys Springboard Intern
+Rahul Makwana , Navprabhat Mishra - Infosys Springboard Intern
